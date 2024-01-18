@@ -56,7 +56,6 @@ const Events = () => {
   const handleRegister = () => {
     if (!handleValues()) {
       alert('Please enter all values');
-
       return;
     }
     events.map((event) => {
@@ -113,6 +112,7 @@ const Events = () => {
         value={student.eventid}
         onChange={(e) => handleInput(e)}
       />
+      <br />
       <br />
       <button type="button" onClick={handleRegister}>
         Register
