@@ -39,23 +39,41 @@ const Events = () => {
     },
   ]);
 
-  const [student, setStudent] = useState({ id: '', name: '', eventid: '' });
+  const [student, setStudent] = useState({
+    id: '',
+    name: '',
+    eventid: '',
+    gender: '',
+    sem: '',
+  });
 
   const handleInput = (e) => {
     setStudent({ ...student, [e.target.name]: e.target.value });
   };
 
   const handleValues = () => {
-    if (student.id == '' || student.name == '' || student.eventid == '') {
+    if (
+      student.id == '' ||
+      student.name == '' ||
+      student.eventid == '' ||
+      student.gender == '' ||
+      student.sem == ''
+    ) {
+      console.log(student);
+      alert('Please enter all values');
       return false;
     } else {
+      if (parseInt(student.eventid) > 105 || parseInt(student.eventid) < 101) {
+        alert('enter correct eventid');
+        return false;
+      }
       return true;
     }
   };
 
   const handleRegister = () => {
     if (!handleValues()) {
-      alert('Please enter all values');
+      setStudent({ id: '', name: '', eventid: '', sem: '', gender: '' });
       return;
     }
     events.map((event) => {
@@ -63,7 +81,7 @@ const Events = () => {
         event.students.push(student);
       }
     });
-    setStudent({ id: '', name: '', eventid: '' });
+    setStudent({ id: '', name: '', eventid: '', sem: '', gender: '' });
   };
 
   return (
@@ -79,7 +97,7 @@ const Events = () => {
                 return (
                   <p key={index}>
                     {' '}
-                    {student.id} {student.name}
+                    {student.id} {student.name} {student.gender} {student.sem}
                   </p>
                 );
               })}
@@ -107,12 +125,36 @@ const Events = () => {
       <br />
       Event ID:{' '}
       <input
-        type="text"
+        type="number"
         name="eventid"
         value={student.eventid}
         onChange={(e) => handleInput(e)}
       />
       <br />
+      Gender:
+      <label htmlFor="">
+        Male:
+        <input type="radio" name="gender" value="male" onChange={handleInput} />
+      </label>
+      <br />
+      <label htmlFor="">
+        Female:
+        <input
+          type="radio"
+          name="gender"
+          value="female"
+          onChange={handleInput}
+        />
+      </label>
+      <br />
+      <label htmlFor="">
+        Semester:
+        <select name="sem" id="" value={student.sem} onChange={handleInput}>
+          <option value="">Select sem</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+        </select>
+      </label>
       <br />
       <button type="button" onClick={handleRegister}>
         Register
